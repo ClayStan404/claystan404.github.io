@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>使用 udev/hwdb 实现键盘映射 - Clay Stan&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Clay Stan" /><meta name="description" content="" /><meta name="keywords" content="vim, hwdb" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.108.0 with theme even" />
+
+
+<link rel="canonical" href="https://www.claystan.ltd/post/others/udev_hwdb/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="使用 udev/hwdb 实现键盘映射" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.claystan.ltd/post/others/udev_hwdb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-11-10T20:46:13+08:00" />
+<meta property="article:modified_time" content="2021-11-10T20:46:13+08:00" />
+<meta itemprop="name" content="使用 udev/hwdb 实现键盘映射">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2021-11-10T20:46:13+08:00" />
+<meta itemprop="dateModified" content="2021-11-10T20:46:13+08:00" />
+<meta itemprop="wordCount" content="2442">
+<meta itemprop="keywords" content="vim,hwdb," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用 udev/hwdb 实现键盘映射"/>
+<meta name="twitter:description" content=""/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Clay Stan</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Clay Stan</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">使用 udev/hwdb 实现键盘映射</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-11-10 </span>
+        <div class="post-category">
+            <a href="/categories/vim/"> vim </a>
+            <a href="/categories/hwdb/"> hwdb </a>
+            </div>
+          <span class="more-meta"> 约 2442 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#键位映射问题">键位映射问题</a></li>
+            <li><a href="#关于-hwdb">关于 hwdb</a></li>
+            <li><a href="#关于-scancodes-和-keycodes">关于 scancodes 和 keycodes</a></li>
+            <li><a href="#改变-scancode-映射的-keycode">改变 scancode 映射的 keycode</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h3 id="键位映射问题">键位映射问题</h3>
+<p>vim 一直是我的主力编辑器，但其实我之前每天使用编辑器的时间并不是很多，并且每次的使用时间也不是很长，在最近编辑文件和写脚本的时间比较多，发现之前键盘映射的一些问题</p>
+<p>由于 <code>esc</code> 键在最左上，如果使用 vim 的话需要频繁按 <code>esc</code> 键盘，这样的话左小拇指就会很累，手动的幅度也比较大，众所周知，vim 用户都很 lazy，为了手的动作幅度能够尽可能小，想出了各种各样的键位和快捷键的映射，我之前就是在编辑模式下把 <code>jj</code> 映射成了 <code>esc</code>，但是最近发现一个问题，由于 <code>fcitx5</code> 默认配置的剪切板 的快捷键是 <code>ctrl+;</code> 在 vim 中偶尔会误触按到 <code>fcitx5</code> 的剪切板，这个时候 jj 是没法当作 <code>esc</code> 来使用关闭掉剪切板的，而且使用 <code>jj</code> 来映射的时候，如果你只是想输入 <code>j</code> 字母的时候，vim 会等待一段时间来看你是想输入 <code>j</code> 字符还是要使用映射的键位，虽然这个时间是可以来调整的，但是还是会有视觉上的卡顿，所以，我还是打算放弃掉这个映射，来使用其他键来映射</p>
+<p>我的想法是把 <code>esc</code> 映射 <code>capslock</code>, <code>capslock</code> 映射 <code>ctrl</code>, <code>ctrl</code> 映射 <code>esc</code></p>
+<p>通过 Google 搜索到的结果，很多人给出了使用 <code>setxkbmap/xmodmap</code> 来实现，但是这个方案也有各种各样的问题，并且这个只能在 <a href="https://wiki.archlinux.org/title/Keyboard_shortcuts#Xorg">xorg 中使用</a>，如果在 console 中使用，还需要再<a href="https://wiki.archlinux.org/title/Linux_console/Keyboard_configuration#Creating_a_custom_keymap">为 console 单独配置</a></p>
+<p>虽然这个方案被我放弃了，但是我再搜索这个方案的时候看到了<a href="https://blog.lilydjwg.me/2019/10/28/poker-ii.214858.html">依云老师关于键盘映射的解决方案</a>，使用 <code>hwdb</code> 和可编程的键盘，我的 <code>keychron k6</code> 不支持编程，所以当然是使用 <code>hwdb</code> 来实现啦</p>
+<h3 id="关于-hwdb">关于 hwdb</h3>
+<p><code>hwdb</code> 是 <code>udev</code> 提供的一个内置函数，用于维护 <code>/etc/udev/hwdb.bin</code> 中的硬件数据库索引，我们可以通过自定义 <code>hwdb</code> 配置文件来实现更底层的键位映射，从而可以同时在 <code>xorg / console</code> 中生效，而且没有那么多的问题</p>
+<p><code>hwdb</code> 可以通过修改<code> scancodes</code> 到 <code>keycodes</code> 的映射来实现键位映射</p>
+<h3 id="关于-scancodes-和-keycodes">关于 scancodes 和 keycodes</h3>
+<p><code>扫描码(scancode)</code>是一个键的最小识别 ID。如果一个键没有扫描码值，我们无法做任何事，因为内核看不到它。</p>
+<p><code>键位码(keycode)</code>是一个键的第二级识别 ID，对应到一个函数。</p>
+<p><code>符号(symbol)</code>是一个键的第三级识别 ID，Xorg 通过该 ID 引用按键。</p>
+<p>我们在键盘输入时，键盘发送键位的 <code>scancode</code> 给 内核的键盘驱动，除了可编程键盘外，键位的 <code>scancode</code> 一般来说都是固定的，然后 <code>linux</code> 内核将 <code>scancode</code> 映射到 <code>keycode</code>，然后根据你的键盘布局的键码映射到一个符号或键符，当然，这只是简要描述，只是为了让你了解之后我们要做的事情</p>
+<h3 id="改变-scancode-映射的-keycode">改变 scancode 映射的 keycode</h3>
+<ol>
+<li>
+<p>安装 evtest 包</p>
+<p>我们使用 <code>evtest</code> 来获取当前要修改的键位的 <code>scancode</code>,然后修改该键位映射的 <code>keycode</code></p>
+<p><code>evtest</code> 这个包在大部分发行版上可能都没有安装，我使用的是 <code>Arch Linux</code>，首先安装这个包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo pacman -S evtest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果你使用的是 <code>Debian</code> 和其衍生发行版</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install evtest
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>找到你的键盘设备</p>
+<p>通过 <code>cat /proc/bus/input/devices</code> 列出当前的输入设备，然后找到你的键盘设备</p>
+<p>一把都可以通过 <code>Name</code> 字段来找到你的设备型号，以下是截取部分我的输出结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">I: <span class="nv">Bus</span><span class="o">=</span><span class="m">0003</span> <span class="nv">Vendor</span><span class="o">=</span>046d <span class="nv">Product</span><span class="o">=</span><span class="m">4074</span> <span class="nv">Version</span><span class="o">=</span><span class="m">0111</span>
+</span></span><span class="line"><span class="cl">N: <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;Logitech G304&#34;</span>
+</span></span><span class="line"><span class="cl">P: <span class="nv">Phys</span><span class="o">=</span>usb-0000:03:00.3-3/input2:1
+</span></span><span class="line"><span class="cl">S: <span class="nv">Sysfs</span><span class="o">=</span>/devices/pci0000:00/0000:00:08.1/0000:03:00.3/usb1/1-3/1-3:1.2/0003:046D:C53F.0004/0003:046D:4074.0005/input/input26
+</span></span><span class="line"><span class="cl">U: <span class="nv">Uniq</span><span class="o">=</span>4074-32-9b-8e-5f
+</span></span><span class="line"><span class="cl">H: <span class="nv">Handlers</span><span class="o">=</span>sysrq kbd leds event11 mouse2 
+</span></span><span class="line"><span class="cl">B: <span class="nv">PROP</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">B: <span class="nv">EV</span><span class="o">=</span><span class="m">120017</span>
+</span></span><span class="line"><span class="cl">B: <span class="nv">KEY</span><span class="o">=</span>ffff0000 <span class="m">1000000000007</span> ff9f207ac14057ff febeffdfffefffff fffffffffffffffe
+</span></span><span class="line"><span class="cl">B: <span class="nv">REL</span><span class="o">=</span><span class="m">1943</span>
+</span></span><span class="line"><span class="cl">B: <span class="nv">MSC</span><span class="o">=</span><span class="m">10</span>
+</span></span><span class="line"><span class="cl">B: <span class="nv">LED</span><span class="o">=</span>1f
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">I: <span class="nv">Bus</span><span class="o">=</span><span class="m">0005</span> <span class="nv">Vendor</span><span class="o">=</span>05ac <span class="nv">Product</span><span class="o">=</span>024f <span class="nv">Version</span><span class="o">=</span>011b
+</span></span><span class="line"><span class="cl">N: <span class="nv">Name</span><span class="o">=</span><span class="s2">&#34;Keychron K6&#34;</span>
+</span></span><span class="line"><span class="cl">P: <span class="nv">Phys</span><span class="o">=</span>80:30:49:4e:60:e8
+</span></span><span class="line"><span class="cl">S: <span class="nv">Sysfs</span><span class="o">=</span>/devices/pci0000:00/0000:00:08.1/0000:03:00.4/usb3/3-2/3-2:1.0/bluetooth/hci0/hci0:2/0005:05AC:024F.0007/input/input30
+</span></span><span class="line"><span class="cl">U: <span class="nv">Uniq</span><span class="o">=</span>dc:2c:26:05:c3:f8
+</span></span><span class="line"><span class="cl">H: <span class="nv">Handlers</span><span class="o">=</span>sysrq kbd leds event12 
+</span></span><span class="line"><span class="cl">B: <span class="nv">PROP</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">B: <span class="nv">EV</span><span class="o">=</span>12001f
+</span></span><span class="line"><span class="cl">B: <span class="nv">KEY</span><span class="o">=</span>3f000303ff <span class="m">0</span> <span class="m">10000</span> 483ffff17aff32d bfd4444600000000 <span class="m">1</span> 130ffb8b17d007 ffff7bfad9415fff ffbeffdfffefffff fffffffffffffffe
+</span></span><span class="line"><span class="cl">B: <span class="nv">REL</span><span class="o">=</span><span class="m">1040</span>
+</span></span><span class="line"><span class="cl">B: <span class="nv">ABS</span><span class="o">=</span><span class="m">10100000000</span>
+</span></span><span class="line"><span class="cl">B: <span class="nv">MSC</span><span class="o">=</span><span class="m">10</span>
+</span></span><span class="line"><span class="cl">B: <span class="nv">LED</span><span class="o">=</span>1f
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到第一个 <code>Name</code> 的值是 <code>Logitech G304</code>，是我的无线鼠标 罗技g304，第二个就是我的键盘设备，<code>keychron k6</code></p>
+<p>我们只需要关注该键盘的 <code>bus id, vendor id，product id ， version id 和 event id</code> ，也就是第二段的第一行 <code>Bus=0005 Vendor=05ac Product=024f Version=011b</code> ，<code>event id</code> 在 H: 开头的那一行，可以看到我的键盘 <code>event id</code> 是 <code>12</code></p>
+</li>
+<li>
+<p>获取到你要修改的键位的 <code>scancode</code></p>
+<p>执行 <code>sudo evtest /dev/input/event&lt;id&gt;</code>  #使用上一步的 <code>event id</code> 替换命令里的 <code>id</code></p>
+<p>然后分别按下你要修改的键，比如我按的 <code>esc</code>，<code>capslock</code> 和 <code>ctrl</code>，输出结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561197.770309, -------------- SYN_REPORT ------------
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561207.561382, <span class="nb">type</span> <span class="m">4</span> <span class="o">(</span>EV_MSC<span class="o">)</span>, code <span class="m">4</span> <span class="o">(</span>MSC_SCAN<span class="o">)</span>, value <span class="m">70029</span>
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561207.561382, <span class="nb">type</span> <span class="m">1</span> <span class="o">(</span>EV_KEY<span class="o">)</span>, code <span class="m">58</span> <span class="o">(</span>KEY_CAPSLOCK<span class="o">)</span>, value <span class="m">1</span>
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561207.561382, -------------- SYN_REPORT ------------
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561207.561771, <span class="nb">type</span> <span class="m">17</span> <span class="o">(</span>EV_LED<span class="o">)</span>, code <span class="m">1</span> <span class="o">(</span>LED_CAPSL<span class="o">)</span>, value <span class="m">1</span>
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561207.561771, -------------- SYN_REPORT ------------
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561207.594132, <span class="nb">type</span> <span class="m">4</span> <span class="o">(</span>EV_MSC<span class="o">)</span>, code <span class="m">4</span> <span class="o">(</span>MSC_SCAN<span class="o">)</span>, value <span class="m">70029</span>
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561207.594132, <span class="nb">type</span> <span class="m">1</span> <span class="o">(</span>EV_KEY<span class="o">)</span>, code <span class="m">58</span> <span class="o">(</span>KEY_CAPSLOCK<span class="o">)</span>, value <span class="m">0</span>
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561207.594132, -------------- SYN_REPORT ------------
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561208.907878, <span class="nb">type</span> <span class="m">4</span> <span class="o">(</span>EV_MSC<span class="o">)</span>, code <span class="m">4</span> <span class="o">(</span>MSC_SCAN<span class="o">)</span>, value <span class="m">70039</span>
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561208.907878, <span class="nb">type</span> <span class="m">1</span> <span class="o">(</span>EV_KEY<span class="o">)</span>, code <span class="m">29</span> <span class="o">(</span>KEY_LEFTCTRL<span class="o">)</span>, value <span class="m">1</span>
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561208.907878, -------------- SYN_REPORT ------------
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561208.952822, <span class="nb">type</span> <span class="m">4</span> <span class="o">(</span>EV_MSC<span class="o">)</span>, code <span class="m">4</span> <span class="o">(</span>MSC_SCAN<span class="o">)</span>, value <span class="m">70039</span>
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561208.952822, <span class="nb">type</span> <span class="m">1</span> <span class="o">(</span>EV_KEY<span class="o">)</span>, code <span class="m">29</span> <span class="o">(</span>KEY_LEFTCTRL<span class="o">)</span>, value <span class="m">0</span>
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561208.952822, -------------- SYN_REPORT ------------
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561209.819355, <span class="nb">type</span> <span class="m">4</span> <span class="o">(</span>EV_MSC<span class="o">)</span>, code <span class="m">4</span> <span class="o">(</span>MSC_SCAN<span class="o">)</span>, value 700e0
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561209.819355, <span class="nb">type</span> <span class="m">1</span> <span class="o">(</span>EV_KEY<span class="o">)</span>, code <span class="m">1</span> <span class="o">(</span>KEY_ESC<span class="o">)</span>, value <span class="m">1</span>
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561209.819355, -------------- SYN_REPORT ------------
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561209.875377, <span class="nb">type</span> <span class="m">4</span> <span class="o">(</span>EV_MSC<span class="o">)</span>, code <span class="m">4</span> <span class="o">(</span>MSC_SCAN<span class="o">)</span>, value 700e0
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561209.875377, <span class="nb">type</span> <span class="m">1</span> <span class="o">(</span>EV_KEY<span class="o">)</span>, code <span class="m">1</span> <span class="o">(</span>KEY_ESC<span class="o">)</span>, value <span class="m">0</span>
+</span></span><span class="line"><span class="cl">Event: <span class="nb">time</span> 1636561209.875377, -------------- SYN_REPORT ------------
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>前两个 <code>SYN_REPORT</code> 分别代表着按下 <code>esc</code> 键的按下和释放的信息</p>
+<p>第三，四个是 <code>capslock</code> 的按下和释放的信息</p>
+<p>最后两个是 <code>ctrl</code> 的按下和释放的信息</p>
+<p>从中可以获取到我的键盘的 <code>esc</code> 键的 <code>scancode</code> 是 <code>70029</code>，<code>capslock</code> 是 <code>70039</code>，<code>ctrl</code> 是 <code>700e0</code></p>
+</li>
+<li>
+<p>创建一个 hwdb 配置文件</p>
+<p>数据库是从位于<code>/usr/lib/udev/hwdb.d/</code>、 <code>/run/udev/hwdb.d/</code> 和 <code>/etc/udev/hwdb.d/</code> 目录中的扩展名为.hwdb的文件编译而成的。 默认的 &ldquo;扫描码到键码&rdquo; 映射文件是 <code>/usr/lib/udev/hwdb.d/60-keyboard.hwdb</code></p>
+<p>我们不要去修改系统默认的键盘映射文件，我们在 <code>/etc/udev/hwdb.d/</code> 新建一个格式为数字开头的后缀是<code>.hwdb</code> 的文件，数字代表了执行顺序，我们这里随便给一个就可以，比如 <code>99_k6_keyboard.hwdb</code></p>
+<p>格式为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">evdev:input:b&lt;bus_id&gt;v&lt;vendor_id&gt;p&lt;product_id&gt;e&lt;version_id&gt;-&lt;modalias&gt; 
+</span></span><span class="line"><span class="cl"> KEYBOARD_KEY_&lt;scancode&gt;<span class="o">=</span>&lt;keycode&gt;
+</span></span><span class="line"><span class="cl"> KEYBOARD_KEY_&lt;scancode&gt;<span class="o">=</span>&lt;keycode&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中 <code>&lt;bus_id&gt;</code>,<code>&lt;vendor_id&gt;</code>, <code>&lt;product_id&gt;</code> 和 <code>&lt;version_id&gt;</code> 是我们之前第二步里面通过 <code>cat /proc/bus/input/devices</code> 获取到的，<code>&lt;bus_id&gt;</code> 是4位数的十六进制总线ID，对于USB设备，应为0003，我的是蓝牙设备（k6 是蓝牙键盘），是 0005 ，不确定是否都一样，以你的实际输出结果为准，其他的都是 4 位十六进制<strong>大写</strong>（不够4位在前面补0）<code>&lt;modalias&gt;</code> 是描述设备功能的任意长度的输入模态 <code>(input-modalias)</code></p>
+<p>注意一定要是大写，我之前就因为没有大写所以一直没有生效</p>
+<p><code>&lt;scan_code&gt;</code> 的值是上一步通过 <code>sudo evtest /dev/input/event&lt;id&gt;</code> 获取的</p>
+<p><code>&lt;keycode&gt;</code>  的值是小写的键名名称字符串，就像在<code>/usr/include/linux/input-event-codes.h</code>中列的一样（参阅<code>KEY_*&lt;KEYCODE&gt;*</code> 变量）</p>
+<p>我的配置文件为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">evdev:input:b0005v05ACp024Fe011B*	<span class="c1"># 这里可以不用写这么多信息，可以使用通配符 * , 比如只写一个 evdev:input:b0005* 也是可以的，因为busid 是唯一的，不会重复的值</span>
+</span></span><span class="line"><span class="cl"> <span class="nv">KEYBOARD_KEY_70029</span><span class="o">=</span>capslock	<span class="c1">#70029 是 esc 的 scancode,这里让它映射为 capslock</span>
+</span></span><span class="line"><span class="cl"> <span class="nv">KEYBOARD_KEY_70039</span><span class="o">=</span>leftctrl	<span class="c1">#70039 是 capslock 的 scancode,这里让它映射为 leftctrl</span>
+</span></span><span class="line"><span class="cl"> <span class="nv">KEYBOARD_KEY_700e0</span><span class="o">=</span>esc			<span class="c1">#700e0 是 leftctrl 的 scancode,这里让它映射为 esc</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>更新硬件数据库索引 &amp;&amp; 重新加载硬件数据库索引</p>
+<p>写好配置文件并保存后，更新硬件数据库索引</p>
+<p><code>sudo systemd-hwdb update</code></p>
+<p>然后重新加载硬件数据库索引，映射会立即生效</p>
+<p><code>sudo udevadm trigger</code></p>
+</li>
+<li>
+<p>检查按键映射</p>
+<p>最好我们检查映射是否生效</p>
+<p><code>udevadm info /dev/input/event&lt;id&gt; | grep KEYBOARD_KEY</code></p>
+<p>这个命令的输出结果会显示你的键盘映射结果，有这些输出就代表已经生效了，比如我的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">E: <span class="nv">KEYBOARD_KEY_70029</span><span class="o">=</span>capslock
+</span></span><span class="line"><span class="cl">E: <span class="nv">KEYBOARD_KEY_70039</span><span class="o">=</span>leftctrl
+</span></span><span class="line"><span class="cl">E: <span class="nv">KEYBOARD_KEY_700e0</span><span class="o">=</span>esc
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p>参考文档</p>
+<p><a href="https://wiki.archlinux.org/title/Extra_keyboard_keys">ArchWiki: Extra_keyboard_keys</a></p>
+<p><a href="https://wiki.archlinux.org/title/Map_scancodes_to_keycodes">ArchWiki: Map_scancodes_to_keycodes</a></p>
+<p><a href="https://wiki.archlinux.org/title/Keyboard_input">ArchWiki: Keyboard_input</a></p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Clay Stan</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-11-10
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nd/3.0" target="_blank">CC BY-ND 3.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vim/">vim</a>
+          <a href="/tags/hwdb/">hwdb</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/vim/vim_clipboard/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Vim 的两个 clipboard 寄存器</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/debian/reprepro_debian/">
+            <span class="next-text nav-default">使用 reprepro 搭建本地 apt 仓库</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  <span id="/post/others/udev_hwdb/" class="leancloud_visitors" data-flag-title="使用 udev/hwdb 实现键盘映射">
+		<span class="post-meta-item-text">文章阅读量 </span>
+		<span class="leancloud-visitors-count">0</span>
+		<p></p>
+	  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'vW8Ra2mj1HtWOjw8QJXRl8vG-gzGzoHsz',
+        appKey: 'W9vFFjv0AkiwKuFnHM3zAQ7e',
+        notify:  true ,
+        verify:  true ,
+        avatar:'mm',
+        placeholder: '说点什么吧...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:claystan97@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/claystan97" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/ClayStan" class="iconfont icon-github" title="github"></a>
+      <a href="https://salsa.debian.org/claystan" class="iconfont icon-salsa" title="salsa"></a>
+      <a href="https://space.bilibili.com/232638734" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://www.claystan.ltd/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Clay Stan <claystan97@gmail.com></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

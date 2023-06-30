@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vim Recording Macros - Clay Stan&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Clay Stan" /><meta name="description" content="" /><meta name="keywords" content="Hugo, Blog, Clay Stan, Linux" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.108.0 with theme even" />
+
+
+<link rel="canonical" href="https://www.claystan.ltd/post/vim/vim_recording_macros/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vim Recording Macros" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.claystan.ltd/post/vim/vim_recording_macros/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-01-02T05:52:21+08:00" />
+<meta property="article:modified_time" content="2023-01-02T05:53:21+08:00" />
+<meta itemprop="name" content="Vim Recording Macros">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2023-01-02T05:52:21+08:00" />
+<meta itemprop="dateModified" content="2023-01-02T05:53:21+08:00" />
+<meta itemprop="wordCount" content="317">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vim Recording Macros"/>
+<meta name="twitter:description" content=""/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Clay Stan</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Clay Stan</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vim Recording Macros</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-01-02 </span>
+        
+          <span class="more-meta"> 约 317 字 </span>
+          <span class="more-meta"> 预计阅读 1 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#使用-vim-recording-功能录制宏">使用 vim Recording 功能录制宏</a>
+          <ul>
+            <li><a href="#录制一个宏保存到寄存器中">录制一个宏保存到寄存器中</a></li>
+            <li><a href="#调用该宏">调用该宏</a></li>
+            <li><a href="#删除宏">删除宏</a></li>
+            <li><a href="#修改宏">修改宏</a></li>
+            <li><a href="#查看宏">查看宏</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="使用-vim-recording-功能录制宏">使用 vim Recording 功能录制宏</h2>
+<h3 id="录制一个宏保存到寄存器中">录制一个宏保存到寄存器中</h3>
+<p><code>vim Recording</code> 是一个很强大的功能，可以录制一些宏保存到 <code>a-z</code> 26个寄存器中</p>
+<p>在 <code>normal mode</code> 中按 <code>q</code> 开始录制，然后按下 <code>a-z</code> 中的任意一个案件保存到该命名寄存器中</p>
+<p>然后开始录制你的操作，最后按 <code>q</code> 结束</p>
+<h3 id="调用该宏">调用该宏</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&lt;number&gt;@&lt;register&gt; <span class="s2">&#34;number代表要执行的次数 默认一次，register 代表一个指定的寄存器
+</span></span></span><span class="line"><span class="cl"><span class="s2">@a &#34;</span>执行寄存器 a 中的宏
+</span></span><span class="line"><span class="cl">@@ <span class="s2">&#34;再次执行
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="删除宏">删除宏</h3>
+<p><code>qaq</code> ：删除 a 寄存器中的宏 <code>or</code></p>
+<p><code>:call setreg('a', '')</code></p>
+<p><code>:let @a = ''</code></p>
+<h3 id="修改宏">修改宏</h3>
+<p>如修改寄存器 a 中的宏</p>
+<p>可以在任何地方，用任何方式修改</p>
+<p>如在 <code>cmd line mode</code> 中修改：</p>
+<p><code>ctrl+r a</code> 将 a 寄存器中的内容复制出来，在内容前后加上<code>'</code>，然后修改完毕后，在前面加上 <code>let @a=</code> 回车即可</p>
+<p>附加内容直接使用大写字母即可，如 ：<code>qA</code>  然后添加操作后按 <code>q</code> 结束即可</p>
+<h3 id="查看宏">查看宏</h3>
+<p><code>:reg a</code></p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Clay Stan</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-01-02
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nd/3.0" target="_blank">CC BY-ND 3.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/vim/vim_registers/">
+            <span class="next-text nav-default">Vim 中的寄存器(registers)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  <span id="/post/vim/vim_recording_macros/" class="leancloud_visitors" data-flag-title="Vim Recording Macros">
+		<span class="post-meta-item-text">文章阅读量 </span>
+		<span class="leancloud-visitors-count">0</span>
+		<p></p>
+	  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'vW8Ra2mj1HtWOjw8QJXRl8vG-gzGzoHsz',
+        appKey: 'W9vFFjv0AkiwKuFnHM3zAQ7e',
+        notify:  true ,
+        verify:  true ,
+        avatar:'mm',
+        placeholder: '说点什么吧...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:claystan97@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/claystan97" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/ClayStan" class="iconfont icon-github" title="github"></a>
+      <a href="https://salsa.debian.org/claystan" class="iconfont icon-salsa" title="salsa"></a>
+      <a href="https://space.bilibili.com/232638734" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://www.claystan.ltd/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Clay Stan <claystan97@gmail.com></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

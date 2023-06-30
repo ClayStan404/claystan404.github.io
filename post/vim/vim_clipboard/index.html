@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Vim 的两个 clipboard 寄存器 - Clay Stan&#39;s Blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Clay Stan" /><meta name="description" content="" /><meta name="keywords" content="Hugo, Blog, Clay Stan, Linux" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.108.0 with theme even" />
+
+
+<link rel="canonical" href="https://www.claystan.ltd/post/vim/vim_clipboard/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Vim 的两个 clipboard 寄存器" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.claystan.ltd/post/vim/vim_clipboard/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-01-01T06:43:39+08:00" />
+<meta property="article:modified_time" content="2023-01-01T06:43:39+08:00" />
+<meta itemprop="name" content="Vim 的两个 clipboard 寄存器">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2023-01-01T06:43:39+08:00" />
+<meta itemprop="dateModified" content="2023-01-01T06:43:39+08:00" />
+<meta itemprop="wordCount" content="1555">
+<meta itemprop="keywords" content="vim," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vim 的两个 clipboard 寄存器"/>
+<meta name="twitter:description" content=""/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Clay Stan</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Clay Stan</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Vim 的两个 clipboard 寄存器</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-01-01 </span>
+        <div class="post-category">
+            <a href="/categories/vim/"> vim </a>
+            </div>
+          <span class="more-meta"> 约 1555 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#vim-中的两个剪贴板寄存器">vim 中的两个剪贴板寄存器</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h3 id="vim-中的两个剪贴板寄存器">vim 中的两个剪贴板寄存器</h3>
+<p>之前用的一些 <code>Terminal emulator</code>，比如 <code>deepin terminal gtk</code>. <code>gnome terminal</code>,本身都做了一些特性
+来让 vim 和系统的剪贴板直接交互，比如在 vim 中直接选中 <code>ctrl+shift+c/v</code>，或者右键选中复制粘贴
+(当然这些需要 disable mouse)，所以我之前从来没有遇到如何从 vim 中复制/粘贴内容到其他软件内的问题，
+也就从来不知道 vim 是有两个剪贴板的，不知道 vim 的 <code>*</code> <code>+</code> 寄存器的作用</p>
+<p>这次从 <code>xorg</code> 切换到 <code>wayland</code>，发现 <code>deepin terminal</code> 无法在 <code>wayland</code> 下运行，就先用
+<code>gnome terminal</code> 将就了几天，等闲下来了(指 Steam 秋促买的游戏玩腻了)，先从目前比较火的三个支持
+gpu 加速的终端模拟器中一个一个配置并试用了几天之后，确认了 <code>wezterm</code>，作为我的下一个终端模拟器</p>
+<p>先说说这三个终端模拟器的个人感受</p>
+<ol>
+<li>
+<p><code>alacritty</code></p>
+<p>确实简洁，而且确实很快，配置文档也挺简单，但是我翻来覆去没有找到如何在一个 window 里面拆分窗格，
+后来在项目的 <a href="https://github.com/alacritty/alacritty/issues/1360">Issue</a> 里面找到了答案，
+作者意不在此，而且目前看起来也不打算做 ，可惜我对拆分窗格的需求还挺高的，所以，没办法，放弃</p>
+</li>
+<li>
+<p><code>kitty</code></p>
+<p>这个其实我并没有看完文档，在我安装之后，看着文档配置了10分钟我就放弃了，我能感受到它很强大，
+自定义性很高，但是对我来说，自定义性有些太高了，一个很简单的功能，可以有一整页的配置选项，
+在如此繁多的文档内容中找到我需要的，让我头都大了，遂放弃（这个是支持拆分窗格的，并且有很多布局，很多可配置选项</p>
+</li>
+<li>
+<p><code>wezterm</code></p>
+<p>其实我一开始对 <code>wezterm</code> 是没有抱太大期望的，因为之前无意中看到它的一个 <code>Issue</code>，有人抱怨 <code>wezterm</code>
+和前面两个比起来渲染速度慢太多了，虽然下面有作者对此的解释，说那些测试方法不太标准，<code>wezterm</code>
+是交互延迟最低的等等，但当时给我留下了一个不太好的印象，不过，在我最后安装并看了文档开始配置好使用的时候，
+才发现 <code>wezterm</code> 是最适合我的，文档很丰富，简洁明了，自定义个人认为虽然比不上 <code>kitty</code> 可配置项那么多，
+但是我需要的都有，并且给了一堆的 <code>api</code>，你如果有其他需求可以自己去实现，它可能在某些方面不是最强的，但是是最适合我的</p>
+</li>
+</ol>
+<p>说回 vim，其实换一个终端模拟器对 vim 应该是没什么影响的，<code>wezterm</code> 也有 <code>key binding</code> 和 <code>mouse binding</code>，
+来实现其他功能，当然包括了从 vim 中复制粘贴内容到外部和其他软件交互，直到今天，我想从某个文件中复制好几页的内容出来，
+但是突然发现 <code>wezterm</code> 在 vim 里无法滚屏选择来复制，也就是最多也只能复制一整页的内容，如果 enable mouse 的话，
+当然可以滚屏选择，但是这个时候在 <code>vim visual mode</code> 下，<code>wezterm</code> 的 <code>key binding</code> 和 <code>mouse binding</code>
+的功能就失效了，无法复制，所以，在使用了这么久的 vim 之后，我第一次搜索了如何从 vim 中复制内容到外部&hellip;&hellip;</p>
+<p>搜索到的文章大多也都说了，需要编译时启用 <code>+clipboard</code>，我使用的是 <code>neovim</code>，
+看了下<a href="https://neovim.io/doc/user/provider.html">官方文档</a>，<code>neovim</code>把这些功能实现都托付给了其他应用程序来实现，
+称之为 <code>provider</code>，<code>clipboard</code> 这部分当然也是，需要先安装一个<code>clipboard tool</code>，根据官方文档的介绍，
+我安装了 <code>xclip</code>，然后查看 <code>checkhealth</code> 的 <code>clipboard</code> 部分，已经识别到了 <code>xclip</code>，<code>echo has('clipboard')</code>
+也返回了 1 ，但是这个时候在 vim 中复制剪贴的内容还是无法在外部使用，因为 vim 默认复制删除剪贴等操作默认使用的是
+vim 的 <code>&quot;</code> 寄存器，也叫做 <code>unnamed</code> 寄存器，是 vim 的默认寄存器，而与系统剪贴板对应的是 <code>+</code> 寄存器，
+在 <code>Windows</code> 和 <code>MacOS</code> 中，他们只有一个 <code>clipboard</code>，<code>+</code> <code>*</code> 寄存器是一样的，但在基于 x11 的系统上，
+比如 <code>Linux</code> 和大部分 <code>Unix like</code> 系统中，是有两个 <code>clipboard</code> 的，分别是</p>
+<ol>
+<li>
+<p><code>Primary</code> : <code>*</code> 寄存器对应的剪贴板，可以使用鼠标选中内容，使用鼠标中键粘贴</p>
+</li>
+<li>
+<p><code>Clipboard</code> : <code>+</code> 寄存器对应的剪贴板，<code>Linux</code> 下通常使用 <code>Ctrl+Shift+c/v/x</code> 来复制粘贴剪切等</p>
+</li>
+</ol>
+<p>如果想让 vim 使用系统剪贴板，则需要配置一下，让 vim 使用<code>+</code>寄存器即可，这样，之后在 vim 中复制粘贴
+的内容都会与系统剪贴板同步了，就可以从 vim 中复制内容到外部了</p>
+<p>配置方法：</p>
+<p>在.vimrc/init.vim 中加入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">set</span> <span class="nv">clipboard</span><span class="o">=</span>unnamedplus
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Clay Stan</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2023-01-01
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nd/3.0" target="_blank">CC BY-ND 3.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vim/">vim</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/vim/vim_registers/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Vim 中的寄存器(registers)</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/others/udev_hwdb/">
+            <span class="next-text nav-default">使用 udev/hwdb 实现键盘映射</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  <span id="/post/vim/vim_clipboard/" class="leancloud_visitors" data-flag-title="Vim 的两个 clipboard 寄存器">
+		<span class="post-meta-item-text">文章阅读量 </span>
+		<span class="leancloud-visitors-count">0</span>
+		<p></p>
+	  </span>
+  <div id="vcomments"></div>
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script type="text/javascript">
+    new Valine({
+        el: '#vcomments' ,
+        appId: 'vW8Ra2mj1HtWOjw8QJXRl8vG-gzGzoHsz',
+        appKey: 'W9vFFjv0AkiwKuFnHM3zAQ7e',
+        notify:  true ,
+        verify:  true ,
+        avatar:'mm',
+        placeholder: '说点什么吧...',
+        visitor:  true 
+    });
+  </script>
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:claystan97@email.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/claystan97" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/ClayStan" class="iconfont icon-github" title="github"></a>
+      <a href="https://salsa.debian.org/claystan" class="iconfont icon-salsa" title="salsa"></a>
+      <a href="https://space.bilibili.com/232638734" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://www.claystan.ltd/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Clay Stan <claystan97@gmail.com></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

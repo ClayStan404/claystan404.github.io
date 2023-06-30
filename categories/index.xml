@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Clay Stan&#39;s Blog</title>
+    <link>https://www.claystan.ltd/categories/</link>
+    <description>Recent content in Categories on Clay Stan&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Clay Stan &lt;claystan97@gmail.com&gt;</copyright>
+    <lastBuildDate>Mon, 02 Jan 2023 04:52:42 +0800</lastBuildDate><atom:link href="https://www.claystan.ltd/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>vim</title>
+      <link>https://www.claystan.ltd/categories/vim/</link>
+      <pubDate>Mon, 02 Jan 2023 04:52:42 +0800</pubDate>
+      
+      <guid>https://www.claystan.ltd/categories/vim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hwdb</title>
+      <link>https://www.claystan.ltd/categories/hwdb/</link>
+      <pubDate>Wed, 10 Nov 2021 20:46:13 +0800</pubDate>
+      
+      <guid>https://www.claystan.ltd/categories/hwdb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Debian</title>
+      <link>https://www.claystan.ltd/categories/debian/</link>
+      <pubDate>Sun, 27 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.claystan.ltd/categories/debian/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://www.claystan.ltd/categories/linux/</link>
+      <pubDate>Sun, 27 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.claystan.ltd/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>reprepro</title>
+      <link>https://www.claystan.ltd/categories/reprepro/</link>
+      <pubDate>Sun, 27 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.claystan.ltd/categories/reprepro/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

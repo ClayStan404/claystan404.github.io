@@ -1,0 +1,137 @@
+<?xml-stylesheet type="text/xsl" href="https://www.claystan.ltd/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://www.claystan.ltd/about/</loc>
+    <lastmod>2021-10-13T21:41:52+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/</loc>
+    <lastmod>2023-01-02T05:53:21+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/post/</loc>
+    <lastmod>2023-01-02T05:53:21+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/post/vim/vim_recording_macros/</loc>
+    <lastmod>2023-01-02T05:53:21+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/categories/</loc>
+    <lastmod>2023-01-02T04:52:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/tags/</loc>
+    <lastmod>2023-01-02T04:52:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/tags/vim/</loc>
+    <lastmod>2023-01-02T04:52:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/categories/vim/</loc>
+    <lastmod>2023-01-02T04:52:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/post/vim/vim_registers/</loc>
+    <lastmod>2023-01-02T04:52:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/post/vim/vim_clipboard/</loc>
+    <lastmod>2023-01-01T06:43:39+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/tags/hwdb/</loc>
+    <lastmod>2021-11-10T20:46:13+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/categories/hwdb/</loc>
+    <lastmod>2021-11-10T20:46:13+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/post/others/udev_hwdb/</loc>
+    <lastmod>2021-11-10T20:46:13+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/tags/debian/</loc>
+    <lastmod>2020-12-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/categories/debian/</loc>
+    <lastmod>2020-12-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/categories/linux/</loc>
+    <lastmod>2020-12-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/tags/reprepro/</loc>
+    <lastmod>2020-12-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/categories/reprepro/</loc>
+    <lastmod>2020-12-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.claystan.ltd/post/debian/reprepro_debian/</loc>
+    <lastmod>2020-12-27T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+</urlset>
