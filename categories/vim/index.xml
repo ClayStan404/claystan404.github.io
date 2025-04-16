@@ -1,39 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>vim on Clay Stan&#39;s Blog</title>
+    <title>Vim on Clay Stan&#39;s Blog</title>
     <link>https://www.claystan.ltd/categories/vim/</link>
-    <description>Recent content in vim on Clay Stan&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Vim on Clay Stan&#39;s Blog</description>
+    <generator>Hugo</generator>
     <language>en</language>
     <copyright>Clay Stan &lt;claystan97@gmail.com&gt;</copyright>
-    <lastBuildDate>Mon, 02 Jan 2023 04:52:42 +0800</lastBuildDate><atom:link href="https://www.claystan.ltd/categories/vim/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 02 Jan 2023 04:52:42 +0800</lastBuildDate>
+    <atom:link href="https://www.claystan.ltd/categories/vim/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Vim 中的寄存器(registers)</title>
       <link>https://www.claystan.ltd/post/vim/vim_registers/</link>
       <pubDate>Mon, 02 Jan 2023 04:52:42 +0800</pubDate>
-      
       <guid>https://www.claystan.ltd/post/vim/vim_registers/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Vim 的两个 clipboard 寄存器</title>
       <link>https://www.claystan.ltd/post/vim/vim_clipboard/</link>
       <pubDate>Sun, 01 Jan 2023 06:43:39 +0800</pubDate>
-      
       <guid>https://www.claystan.ltd/post/vim/vim_clipboard/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>使用 udev/hwdb 实现键盘映射</title>
       <link>https://www.claystan.ltd/post/others/udev_hwdb/</link>
       <pubDate>Wed, 10 Nov 2021 20:46:13 +0800</pubDate>
-      
       <guid>https://www.claystan.ltd/post/others/udev_hwdb/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

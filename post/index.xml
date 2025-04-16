@@ -4,54 +4,52 @@
     <title>Posts on Clay Stan&#39;s Blog</title>
     <link>https://www.claystan.ltd/post/</link>
     <description>Recent content in Posts on Clay Stan&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
     <copyright>Clay Stan &lt;claystan97@gmail.com&gt;</copyright>
-    <lastBuildDate>Mon, 02 Jan 2023 05:52:21 +0800</lastBuildDate><atom:link href="https://www.claystan.ltd/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Apr 2025 00:21:56 +0800</lastBuildDate>
+    <atom:link href="https://www.claystan.ltd/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MTG Trading Platform</title>
+      <link>https://www.claystan.ltd/post/others/mtg/</link>
+      <pubDate>Thu, 17 Apr 2025 00:21:56 +0800</pubDate>
+      <guid>https://www.claystan.ltd/post/others/mtg/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Vim Recording Macros</title>
       <link>https://www.claystan.ltd/post/vim/vim_recording_macros/</link>
       <pubDate>Mon, 02 Jan 2023 05:52:21 +0800</pubDate>
-      
       <guid>https://www.claystan.ltd/post/vim/vim_recording_macros/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Vim 中的寄存器(registers)</title>
       <link>https://www.claystan.ltd/post/vim/vim_registers/</link>
       <pubDate>Mon, 02 Jan 2023 04:52:42 +0800</pubDate>
-      
       <guid>https://www.claystan.ltd/post/vim/vim_registers/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Vim 的两个 clipboard 寄存器</title>
       <link>https://www.claystan.ltd/post/vim/vim_clipboard/</link>
       <pubDate>Sun, 01 Jan 2023 06:43:39 +0800</pubDate>
-      
       <guid>https://www.claystan.ltd/post/vim/vim_clipboard/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>使用 udev/hwdb 实现键盘映射</title>
       <link>https://www.claystan.ltd/post/others/udev_hwdb/</link>
       <pubDate>Wed, 10 Nov 2021 20:46:13 +0800</pubDate>
-      
       <guid>https://www.claystan.ltd/post/others/udev_hwdb/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>使用 reprepro 搭建本地 apt 仓库</title>
       <link>https://www.claystan.ltd/post/debian/reprepro_debian/</link>
       <pubDate>Sun, 27 Dec 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://www.claystan.ltd/post/debian/reprepro_debian/</guid>
-      <description>Debian 使用reprepro搭建本地apt仓库 reprepro 是用于管理 deb 格式软件包，生成用于分发的仓库管理工具。 支持 .dsc/.deb/.udeb 等格式；会根据配置生成 Packages/Sources 文件以及压缩版本</description>
+      <description>&lt;!----&gt;&#xA;&lt;p&gt;&lt;code&gt;Debian&lt;/code&gt; 使用&lt;code&gt;reprepro&lt;/code&gt;搭建本地&lt;code&gt;apt&lt;/code&gt;仓库&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;reprepro&lt;/code&gt; 是用于管理 deb 格式软件包，生成用于分发的仓库管理工具。 支持 &lt;code&gt;.dsc/.deb/.udeb&lt;/code&gt; 等格式；会根据配置生成 &lt;code&gt;Packages/Sources&lt;/code&gt; 文件以及压缩版本， 并对 &lt;code&gt;Release&lt;/code&gt; (根据配置还生成 &lt;code&gt;Release.gpg&lt;/code&gt;) 。&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>
